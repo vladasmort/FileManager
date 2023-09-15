@@ -7,7 +7,7 @@ $path = isset($_GET['path'])  ? urldecode($_GET['path']) : '.';
 if (!is_dir($path)) {
     if (file_exists($path)) {
         $filePath = $path;
-        include 'Views/fileInfo.php';
+        include 'main/fileInfo.php';
         exit;
     } else {
         die('Invalid directory or file path: ' . $path);
@@ -19,7 +19,7 @@ $files = scandir($path);
 unset($files[0]);
 if ($path === ".") unset($files[1]);
 
- //------------------------delete-------------------------------------------------------------------
+ 
 function removeRecursively($dir)
 {
     if (is_dir($dir)) {
@@ -36,7 +36,7 @@ function removeRecursively($dir)
         rmdir($dir);
     }
 }
-$disallowedFiles = ["index.php", "receiveFormData.php", "uploadForm.php", "createNEw.php", "uploads"];
+$disallowedFiles = ["index.php", "Data.php", "upload.php", "create.php", "files"];
 $deleteMode = isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['file']);
 if ($deleteMode) {
     $fileToDelete = $_GET['file']; // Get the file to be deleted
@@ -94,22 +94,22 @@ $page = isset($_GET['page']) ? $_GET['page'] : false;
 </head>
  
 <body class="bg-secondary-subtle">
-   <?php include './Views/snippets/Header.php'; ?>
+   <?php include './main/snippets/Header.php'; ?>
     
     <main>
     <div class="container">
     <?php switch ($page) { 
         case 'createNew':
-            include './Views/createNew.php';
+            include './main/create.php';
             break;
         case 'upload':
-            include './Views/uploadForm.php';
+            include './main/upload.php';
             break;
         case 'fileInfo':
-            include './Views/fileInfo.php';
+            include './main/fileInfo.php';
             break;
         default:
-            include './Views/Home.php';
+            include './main/Home.php';
     }
     ?>
     </main>
